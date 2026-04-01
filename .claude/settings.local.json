@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm install:*)",
+      "Bash(npm run:*)",
+      "Bash(node -e \"const m = require\\(''/Users/ariel/Desktop/repos/sf-plugin-arl/node_modules/@salesforce/sf-plugins-core''\\); console.log\\(Object.keys\\(m\\).filter\\(k => k.toLowerCase\\(\\).includes\\(''flag''\\) || k.toLowerCase\\(\\).includes\\(''org''\\) || k.toLowerCase\\(\\).includes\\(''api''\\)\\)\\)\")",
+      "Bash(node -e \"const m = require\\(''/Users/ariel/Desktop/repos/sf-plugin-arl/node_modules/@salesforce/apex-node''\\); console.log\\(Object.keys\\(m\\)\\)\")",
+      "Bash(node -e \"const m = require\\(''/Users/ariel/Desktop/repos/sf-plugin-arl/node_modules/@salesforce/core''\\); console.log\\(Object.keys\\(m\\).filter\\(k => k.toLowerCase\\(\\).includes\\(''stream''\\)\\)\\)\")",
+      "Bash(node -e \"const { SfCommand } = require\\(''/Users/ariel/Desktop/repos/sf-plugin-arl/node_modules/@salesforce/sf-plugins-core''\\); console.log\\(JSON.stringify\\(Object.keys\\(SfCommand.baseFlags\\)\\)\\)\")",
+      "Bash(node -e \"const { Flags } = require\\(''/Users/ariel/Desktop/repos/sf-plugin-arl/node_modules/@salesforce/sf-plugins-core''\\); console.log\\(Object.keys\\(Flags\\)\\)\")",
+      "Bash(node -e \"const { StreamingClient } = require\\(''/Users/ariel/Desktop/repos/sf-plugin-arl/node_modules/@salesforce/core''\\); console.log\\(Object.keys\\(StreamingClient\\)\\)\")",
+      "Bash(node -e \"const { ComponentSet } = require\\(''/Users/ariel/Desktop/repos/sf-plugin-arl/node_modules/@salesforce/source-deploy-retrieve''\\); const cs = new ComponentSet\\(\\); console.log\\(Object.getOwnPropertyNames\\(Object.getPrototypeOf\\(cs\\)\\).filter\\(m => m.toLowerCase\\(\\).includes\\(''package''\\) || m.toLowerCase\\(\\).includes\\(''xml''\\) || m.toLowerCase\\(\\).includes\\(''manifest''\\) || m.toLowerCase\\(\\).includes\\(''api''\\)\\)\\)\")",
+      "Bash(node -e \"const { TestService, TestLevel } = require\\(''/Users/ariel/Desktop/repos/sf-plugin-arl/node_modules/@salesforce/apex-node''\\); const ts = new TestService\\({}\\); console.log\\(Object.getOwnPropertyNames\\(Object.getPrototypeOf\\(ts\\)\\)\\)\")",
+      "Bash(node -e \"const { StreamingClient } = require\\(''/Users/ariel/Desktop/repos/sf-plugin-arl/node_modules/@salesforce/core''\\); const c = new StreamingClient\\(\\); console.log\\(Object.getOwnPropertyNames\\(Object.getPrototypeOf\\(c\\)\\)\\)\")"
+    ]
+  }
+}

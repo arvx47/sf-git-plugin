@@ -1,0 +1,40 @@
+{
+  "name": "sf-plugin-arl",
+  "version": "1.0.0",
+  "description": "Salesforce CLI plugin for arl team commands",
+  "author": "ariel",
+  "main": "lib/index.js",
+  "type": "module",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "prepack": "npm run build"
+  },
+  "dependencies": {
+    "@oclif/core": "^4",
+    "@salesforce/core": "^8",
+    "@salesforce/sf-plugins-core": "^11",
+    "@salesforce/source-deploy-retrieve": "^12",
+    "@salesforce/apex-node": "^8"
+  },
+  "devDependencies": {
+    "@types/node": "^22",
+    "typescript": "^5"
+  },
+  "oclif": {
+    "commands": "./lib/commands",
+    "bin": "sf",
+    "topicSeparator": " ",
+    "topics": {
+      "arl": {
+        "description": "Arl team Salesforce commands"
+      },
+      "arl validate": {
+        "description": "Validate deployments"
+      }
+    }
+  },
+  "files": [
+    "/lib",
+    "/messages"
+  ]
+}
