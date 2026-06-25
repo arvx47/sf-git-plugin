@@ -2,13 +2,14 @@ import { Flags, SfCommand } from '@salesforce/sf-plugins-core'
 import { ComponentSet } from '@salesforce/source-deploy-retrieve'
 import { readFileSync } from 'node:fs'
 import { join } from 'node:path'
+import { CMD } from '../../constants.js'
 
 export default class ArlValidate extends SfCommand<void> {
   static description = 'Validate a deployment without actually deploying'
 
   static examples = [
-    'sf arl validate force-app/main/default/classes/MyClass.cls',
-    'sf arl validate --manifest releases/v1.0 (uses releases/v1.0/package.xml and tests.txt)',
+    `${CMD} validate force-app/main/default/classes/MyClass.cls`,
+    `${CMD} validate --manifest releases/v1.0 (uses releases/v1.0/package.xml and tests.txt)`,
   ]
 
   static strict = false

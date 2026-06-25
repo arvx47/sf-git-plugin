@@ -3,13 +3,14 @@ import { Flags, SfCommand } from '@salesforce/sf-plugins-core'
 import { SfProject } from '@salesforce/core'
 import { ComponentSet } from '@salesforce/source-deploy-retrieve'
 import { join } from 'node:path'
+import { CMD } from '../../constants.js'
 
 export default class ArlRetrieveManifest extends SfCommand<void> {
   static description = 'Retrieve using a package.xml manifest file'
 
   static examples = [
-    'sf arl retrieve-manifest package.xml',
-    'sf arl retrieve-manifest releases/v1.0/package.xml',
+    `${CMD} retrieve-manifest package.xml`,
+    `${CMD} retrieve-manifest releases/v1.0/package.xml`,
   ]
 
   static args = {

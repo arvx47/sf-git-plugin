@@ -2,13 +2,14 @@ import { Flags, SfCommand } from '@salesforce/sf-plugins-core'
 import { SfProject } from '@salesforce/core'
 import { ComponentSet } from '@salesforce/source-deploy-retrieve'
 import { join } from 'node:path'
+import { CMD } from '../../constants.js'
 
 export default class ArlRetrieve extends SfCommand<void> {
   static description = 'Retrieve source files from the org'
 
   static examples = [
-    'sf arl retrieve force-app/main/default/classes/MyClass.cls',
-    'sf arl retrieve force-app/main/default/classes force-app/main/default/triggers',
+    `${CMD} retrieve force-app/main/default/classes/MyClass.cls`,
+    `${CMD} retrieve force-app/main/default/classes force-app/main/default/triggers`,
   ]
 
   static strict = false

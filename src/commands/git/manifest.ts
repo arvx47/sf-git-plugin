@@ -1,13 +1,14 @@
 import { Flags, SfCommand } from '@salesforce/sf-plugins-core'
 import { ComponentSet } from '@salesforce/source-deploy-retrieve'
 import { execSync } from 'node:child_process'
+import { CMD } from '../../constants.js'
 
 export default class ArlManifest extends SfCommand<void> {
   static description = 'Generate a package.xml manifest from source files and copy it to clipboard'
 
   static examples = [
-    'sf arl manifest force-app/main/default/classes/MyClass.cls',
-    'sf arl manifest force-app/main/default/classes force-app/main/default/triggers',
+    `${CMD} manifest force-app/main/default/classes/MyClass.cls`,
+    `${CMD} manifest force-app/main/default/classes force-app/main/default/triggers`,
   ]
 
   static strict = false

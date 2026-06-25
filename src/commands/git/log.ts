@@ -1,11 +1,12 @@
 import { Flags, SfCommand } from '@salesforce/sf-plugins-core'
 import { LogService } from '@salesforce/apex-node'
+import { CMD } from '../../constants.js'
 
 export default class ArlLog extends SfCommand<void> {
   static description = 'Tail org debug logs, showing only USER_DEBUG and FATAL_ERROR entries'
 
   static examples = [
-    'sf arl log',
+    `${CMD} log`,
   ]
 
   static flags = {

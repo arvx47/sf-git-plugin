@@ -25,10 +25,10 @@
     "bin": "sf",
     "topicSeparator": " ",
     "topics": {
-      "arl": {
+      "git": {
         "description": "Arl team Salesforce commands"
       },
-      "arl validate": {
+      "git validate": {
         "description": "Validate deployments"
       }
     }

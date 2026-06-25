@@ -1,39 +1,45 @@
-import { Args } from '@oclif/core'
 import { Flags, SfCommand } from '@salesforce/sf-plugins-core'
 import { ComponentSet } from '@salesforce/source-deploy-retrieve'
+import { CMD } from '../../constants.js'
 
-export default class ArlDeployManifest extends SfCommand<void> {
-  static description = 'Deploy using a package.xml manifest file'
+export default class ArlDeploy extends SfCommand<void> {
+  static description = 'Deploy source files to the org'
 
   static examples = [
-    'sf arl deploy-manifest package.xml',
-    'sf arl deploy-manifest releases/v1.0/package.xml',
+    `${CMD} deploy force-app/main/default/classes/MyClass.cls`,
+    `${CMD} deploy force-app/main/default/classes force-app/main/default/triggers`,
   ]
 
-  static args = {
-    manifest: Args.file({ description: 'Path to package.xml', required: true }),
-  }
+  static strict = false
 
   static flags = {
     ...SfCommand.baseFlags,
     'target-org': Flags.requiredOrg(),
     'api-version': Flags.orgApiVersion(),
+    'ignore-conflicts': Flags.boolean({
+      char: 'c',
+      description: 'Ignore conflicts during deployment',
+      default: false,
+    }),
   }
 
   async run(): Promise<void> {
-    const { args, flags } = await this.parse(ArlDeployManifest)
+    const { argv, flags } = await this.parse(ArlDeploy)
+
+    if (argv.length === 0) {
+      this.error('At least one file or directory is required')
+    }
 
     const org = flags['target-org']
     const connection = org.getConnection(flags['api-version'])
-
-    const cs = await ComponentSet.fromManifest({
-      manifestPath: args.manifest as string,
-      resolveSourcePaths: ['.'],
-    })
+    const cs = await ComponentSet.fromSource({ fsPaths: argv as string[] })
 
     this.spinner.start('Deploying...')
 
-    const deploy = await cs.deploy({ usernameOrConnection: connection })
+    const deploy = await cs.deploy({
+      usernameOrConnection: connection,
+      apiOptions: { ignoreWarnings: flags['ignore-conflicts'] },
+    })
 
     deploy.onUpdate((response) => {
       const { numberComponentsDeployed, numberComponentsTotal } = response

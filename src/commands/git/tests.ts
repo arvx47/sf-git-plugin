@@ -1,13 +1,14 @@
 import { Flags, SfCommand } from '@salesforce/sf-plugins-core'
 import { TestService, TestLevel } from '@salesforce/apex-node'
 import type { TestResult } from '@salesforce/apex-node'
+import { CMD } from '../../constants.js'
 
 export default class ArlTests extends SfCommand<void> {
   static description = 'Run Apex tests by class name'
 
   static examples = [
-    'sf arl tests MyClassTest',
-    'sf arl tests MyClassTest AnotherTest',
+    `${CMD} tests MyClassTest`,
+    `${CMD} tests MyClassTest AnotherTest`,
   ]
 
   static strict = false

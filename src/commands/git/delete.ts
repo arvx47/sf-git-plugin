@@ -1,12 +1,12 @@
 import { Flags, SfCommand } from '@salesforce/sf-plugins-core'
-import { ComponentSet } from '@salesforce/source-deploy-retrieve'
+import { ComponentSet, DestructiveChangesType } from '@salesforce/source-deploy-retrieve'
+import { CMD } from '../../constants.js'
 
-export default class ArlDeploy extends SfCommand<void> {
-  static description = 'Deploy source files to the org'
+export default class ArlDelete extends SfCommand<void> {
+  static description = 'Delete source files from the org'
 
   static examples = [
-    'sf arl deploy force-app/main/default/classes/MyClass.cls',
-    'sf arl deploy force-app/main/default/classes force-app/main/default/triggers',
+    `${CMD} delete force-app/main/default/classes/OldClass.cls`,
   ]
 
   static strict = false
@@ -15,15 +15,10 @@ export default class ArlDeploy extends SfCommand<void> {
     ...SfCommand.baseFlags,
     'target-org': Flags.requiredOrg(),
     'api-version': Flags.orgApiVersion(),
-    'ignore-conflicts': Flags.boolean({
-      char: 'c',
-      description: 'Ignore conflicts during deployment',
-      default: false,
-    }),
   }
 
   async run(): Promise<void> {
-    const { argv, flags } = await this.parse(ArlDeploy)
+    const { argv, flags } = await this.parse(ArlDelete)
 
     if (argv.length === 0) {
       this.error('At least one file or directory is required')
@@ -31,14 +26,17 @@ export default class ArlDeploy extends SfCommand<void> {
 
     const org = flags['target-org']
     const connection = org.getConnection(flags['api-version'])
-    const cs = await ComponentSet.fromSource({ fsPaths: argv as string[] })
+    const sourceCS = await ComponentSet.fromSource({ fsPaths: argv as string[] })
 
-    this.spinner.start('Deploying...')
+    // Build a new ComponentSet where all components are marked as destructive (post-deploy deletion)
+    const deleteCS = new ComponentSet()
+    for (const component of sourceCS.getSourceComponents()) {
+      deleteCS.add(component, DestructiveChangesType.POST)
+    }
 
-    const deploy = await cs.deploy({
-      usernameOrConnection: connection,
-      apiOptions: { ignoreWarnings: flags['ignore-conflicts'] },
-    })
+    this.spinner.start('Deleting from org...')
+
+    const deploy = await deleteCS.deploy({ usernameOrConnection: connection })
 
     deploy.onUpdate((response) => {
       const { numberComponentsDeployed, numberComponentsTotal } = response
@@ -49,13 +47,13 @@ export default class ArlDeploy extends SfCommand<void> {
     this.spinner.stop()
 
     if (result.response.success) {
-      this.log(`Deploy successful. ${result.response.numberComponentsDeployed} components deployed.`)
+      this.log('Delete successful.')
     } else {
       const errors = result.response.details?.componentFailures
       const messages = Array.isArray(errors)
         ? errors.map((e) => e.problem).join('\n')
         : String(errors?.problem ?? 'Unknown error')
-      this.error(`Deploy failed:\n${messages}`)
+      this.error(`Delete failed:\n${messages}`)
     }
   }
 }
