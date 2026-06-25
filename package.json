@@ -1,7 +1,7 @@
 {
-  "name": "sf-plugin-arl",
+  "name": "sf-git-plugin",
   "version": "1.0.0",
-  "description": "Salesforce CLI plugin for arl team commands",
+  "description": "Salesforce CLI plugin to enhance GIT related commands",
   "author": "ariel",
   "main": "lib/index.js",
   "type": "module",
